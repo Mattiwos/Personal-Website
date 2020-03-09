@@ -1,0 +1,37 @@
+{
+  "name": "notes-application",
+  "version": "1.0.0",
+  "description": "Using React for frontend and nodejs for backend  MongoDB to store notes/tasks and senstive info",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "client": "cd client; npm start",
+    "both": "concurrently \" nodemon index.js arg\" \"cd client; npm start arg\"",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mattiwos/Notes-Application.git"
+  },
+  "author": "Mattiwos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mattiwos/Notes-Application/issues"
+  },
+  "homepage": "https://github.com/Mattiwos/Notes-Application#readme",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "concurrently": "^5.1.0",
+    "config.json": "0.0.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.21.3",
+    "keygenerator": "^1.0.4",
+    "mongodb": "^3.5.4",
+    "mongoose": "^5.9.2",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "pre-commit": "^1.2.2",
+    "socketio": "^1.0.0"
+  }
+}

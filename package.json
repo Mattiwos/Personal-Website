@@ -1,0 +1,23 @@
+{
+  "name": "2020-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mattiwos/2020-Website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mattiwos/2020-Website/issues"
+  },
+  "homepage": "https://github.com/Mattiwos/2020-Website#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
