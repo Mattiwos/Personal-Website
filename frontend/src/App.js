@@ -1,8 +1,8 @@
 import React from "react";
 // eslint-disable-next-line
 import { BrowserRouter, Route } from "react-router-dom";
-
-import Dashboard from "./Dashboard/Dashboard.js";
+/* eslint-disable import/first */
+import Guide from "./Dashboard/Guide";
 import Home from "./Homepage/Home.js";
 
 import "./App.css";
@@ -24,7 +24,7 @@ function App() {
           path="/dashboard"
           render={() => (
             <div className="App">
-              <Dashboard />
+              <Guide />
             </div>
           )}
         />

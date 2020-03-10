@@ -100,6 +100,7 @@ MongoClient.connect(
         socket.emit("currlist", updatenote());
       });
       socket.on("sessionkey", arg => {
+
         if (arg.sesskey == spkey) {
           socket.emit("ressessionkey", {
             wrong: false
@@ -111,9 +112,16 @@ MongoClient.connect(
         }
       });
       socket.on("homepagereq", arg => {
-        socket.emit("htmlpageres", {
-          pagetxt: "<h1>Secret flag{felixhowdidyougethere}</h1>"
-        });
+        if (arg != null || arg != undefined){
+          if (arg.sesskey == spkey) {
+            socket.emit("htmlpageres", {
+              pagetxt: "<h1>Secret flag{felixhowdidyougethere}</h1>"
+            });
+          }
+        }
+        
+        
+
       });
       socket.on("disconnect", arg => {});
     });

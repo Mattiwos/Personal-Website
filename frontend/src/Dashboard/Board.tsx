@@ -99,7 +99,9 @@ class Board extends React.Component<Props, State> {
   }
   htmlreq() {
     this.sendReq();
-    this.socket.emit("homepagereq", {});
+    this.socket.emit("homepagereq", {
+      sesskey: getCookie("key")
+    });
   }
   sendReq() {
     console.log("Auth process started");
