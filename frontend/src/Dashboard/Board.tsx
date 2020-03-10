@@ -5,6 +5,7 @@ import * as React from "react";
 
 import io from "socket.io-client";
 
+import Noteboard from "./Noteboard"
 // this helps TypeScript to understand jQuery best !!!  otherwise It will confused .
 
 interface Props {
@@ -94,6 +95,8 @@ class Board extends React.Component<Props, State> {
         <button id="submit" type="button" onClick={() => this.htmlreq()}>
           Load Page
         </button>
+        <Noteboard></Noteboard>
+
       </div>
     );
   }
