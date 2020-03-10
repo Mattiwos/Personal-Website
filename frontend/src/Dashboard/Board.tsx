@@ -6,7 +6,9 @@ import * as React from "react";
 import io from "socket.io-client";
 
 import Noteboard from "./Noteboard"
-// this helps TypeScript to understand jQuery best !!!  otherwise It will confused .
+import WordofTheDay from "./Wordoftheday";
+
+//  
 
 interface Props {
   //interface is used to make entities such as Property conform with
@@ -41,7 +43,7 @@ class Board extends React.Component<Props, State> {
     });
     this.state = {
       hasError: false,
-      htmltxt: "<h2>Mattiwos flag not here</h2>"
+      htmltxt: ""
     };
 
     this.socket.on("connect", () => {
@@ -52,9 +54,7 @@ class Board extends React.Component<Props, State> {
       console.log("socket connected error --> " + err);
     });
 
-    // this.socket.on("reconnect_attempt", () => {
-    //   this.socket.io.opts.transports = ["websocket"];
-    // }); Might not need it threw an error for .io
+   
 
     this.socket.on("htmlpageres", (arg: { pagetxt: string }) => {
       console.log(arg.pagetxt);
@@ -72,9 +72,7 @@ class Board extends React.Component<Props, State> {
     return this.stringToHTML(this.state.htmltxt);
   }
   stringToHTML(str: string) {
-    // this.parser = new DOMParser();
-    // this.doc = this.parser.parseFromString(str, 'text/html');
-    // return (this.doc.body);
+
     this.dom = document.createElement("div");
     this.dom.innerHTML = str;
     return this.dom;
@@ -88,14 +86,28 @@ class Board extends React.Component<Props, State> {
   render() {
     return (
       <div>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"></link>
+
         <div ref={node => (this.getPageContainer = node)}>
           <div id="hiddenpage"></div>
         </div>
+        <div className="container">
+              <div className="row">
+                   <div className="col-sm">
+                     <Noteboard></Noteboard>
+                    </div>
+                    <div className="col-sm">
+                        One of three columns
+                    </div>
+                    <div className="col-sm">
+                      <WordofTheDay></WordofTheDay>
+                    
+                </div>
+          </div>
+         </div>
 
-        <button id="submit" type="button" onClick={() => this.htmlreq()}>
-          Load Page
-        </button>
-        <Noteboard></Noteboard>
+        
+        
 
       </div>
     );

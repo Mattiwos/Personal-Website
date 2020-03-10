@@ -70,6 +70,7 @@ class Guide extends React.Component<Props, State> {
     });
   }
   render() {
+      
     return (
     //   <BrowserRouter>
         <div>

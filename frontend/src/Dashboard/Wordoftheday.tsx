@@ -9,11 +9,12 @@ interface Props {
     products?: string[]; //contains all the properies such as html tag
 }
 interface State {
-    displayboard: boolean;
+    
+    wordoftehdaylist: any;
 
 }
 
-class Noteboard extends React.Component<Props, State> {
+class WordofTheDay extends React.Component<Props, State> {
     baseUrl: string;
     socket: SocketIOClient.Socket;
     
@@ -22,6 +23,8 @@ class Noteboard extends React.Component<Props, State> {
         super(props);
 
         this.baseUrl = secret.getLocalhost();
+        this.state = {wordoftehdaylist: undefined};
+
         this.socket = io(this.baseUrl, {
           reconnectionDelay: 1000,
           reconnection: true,
@@ -40,12 +43,24 @@ class Noteboard extends React.Component<Props, State> {
         console.log("socket connected error --> " + err);
         });
 
+        this.socket.on("wordoftheday", (arg: { jlist: any, test: string }) => {
+            console.log(arg.test);
+            this.setState(state => {
+            //   this.componentDidMount();
+              return { wordoftehdaylist: arg.jlist };
+            });
+          });
+
+
+
+        this.wordofthedayreq()
+
     }
 
 
     render(){
         const mystyle = {
-            padding: "10px",
+            padding: "2px",
             fontFamily: "Arial",
             
           };
@@ -53,10 +68,9 @@ class Noteboard extends React.Component<Props, State> {
         return (
             <div>
                 <div style ={mystyle}>
-                <input type="text" id="Noteinput" value = "Note"name="Noteinput"></input>
-                <button type="button" onClick= {() => this.sendNote()}>Click Me!</button>
-                
-            </div>
+                    <h1>Word of the Day</h1>
+                </div>
+                {this.displaywords()}
         
 
 
@@ -68,12 +82,28 @@ class Noteboard extends React.Component<Props, State> {
         );
 
     }
-    sendNote(){
+    wordofthedayreq(){
+        console.log("sending request")
+        this.socket.emit('wordofthedayreq',{});
 
+    }
+    displaywords(){
+        if (this.state.wordoftehdaylist !== undefined){
+           return(
+            <div>
+                <h1>should display</h1>
+             </div>
+
+           );
+           
+        }
+     
 
     }
 
 
+
 }
 
-export default Noteboard;
+
+export default WordofTheDay;

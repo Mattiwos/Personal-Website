@@ -14,6 +14,23 @@ app.use(morgan("common"));
 const assert = require("assert");
 const password = "Iag8m4arZ9ymTyPz";
 const { MongoClient } = require("mongodb");
+const Request = require("request");
+function getWordofTheDay(){
+  Request.get("https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=9e9ca34c-7e51-41cc-bf5e-4dd5e8a0f613", (error, response, body) => {
+    if(error) {
+        return error;
+    }
+    console.dir(JSON.parse(body)[0]);
+    return JSON.parse(body)[0];
+  });
+
+} 
+
+getWordofTheDay()
+console.log((getWordofTheDay()).meta.id)
+
+
+
 const uri =
   "mongodb+srv://notesapp:Iag8m4arZ9ymTyPz@notes-oczln.mongodb.net/test?retryWrites=true&w=majority";
 const url = "mongodb://127.0.0.1:27017";
@@ -43,6 +60,10 @@ app.post("/getres", cors(), (req, res) => {
 });
 
 app.get("/", (req, res) => {});
+
+
+
+
 
 MongoClient.connect(
   url,
@@ -123,6 +144,18 @@ MongoClient.connect(
         
 
       });
+      
+      socket.on("wordofthedayreq", arg => {
+            console.log("sending word of the day")
+
+            socket.emit("wordoftheday", {
+              jlist: getWordofTheDay(),
+              test: "sdsd"
+            });
+
+      });
+
+
       socket.on("disconnect", arg => {});
     });
   }
