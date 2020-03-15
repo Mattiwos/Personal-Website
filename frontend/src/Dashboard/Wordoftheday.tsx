@@ -2,8 +2,10 @@ import { App } from "../testsecret";
 var secret = new App.Secret();
 /* eslint-disable import/first */
 import * as React from "react";
+import Request from "request";
 
 import io from "socket.io-client";
+
 
 interface Props {
     products?: string[]; //contains all the properies such as html tag
@@ -17,8 +19,7 @@ interface State {
 class WordofTheDay extends React.Component<Props, State> {
     baseUrl: string;
     socket: SocketIOClient.Socket;
-    
-
+   
     constructor(props: Props, state: State){
         super(props);
 
@@ -43,17 +44,24 @@ class WordofTheDay extends React.Component<Props, State> {
         console.log("socket connected error --> " + err);
         });
 
-        this.socket.on("wordoftheday", (arg: { jlist: any, test: string }) => {
+        this.socket.on("wordoftheday", (arg: { wod: {word: string} , test: string }) => {
             console.log(arg.test);
             this.setState(state => {
             //   this.componentDidMount();
-              return { wordoftehdaylist: arg.jlist };
+              return { wordoftehdaylist: JSON.stringify(arg.wod.word )};
             });
           });
 
+        Request.get("https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=9e9ca34c-7e51-41cc-bf5e-4dd5e8a0f613", (error: any, response: any, body: any) => {
+            if(error) {
+                return error;
+            }
+            console.dir(JSON.parse(body))
+        
+          return 0;
+        
+        });
 
-
-        this.wordofthedayreq()
 
     }
 

@@ -1,20 +1,39 @@
 // eslint-disable-next-line
 import React, { Component } from "react";
 
-class Home extends React.Component {
-  constructor(props) {
+
+interface Props{
+    product?: String[];
+
+}
+interface States{
+    titlesize: number;
+    randomColor: String;
+
+
+
+}
+
+class Home extends React.Component<Props,States> {
+
+
+
+  constructor(props: Props, state: States) {
     super(props);
-    this.titlesize = 9;
+
+   
+
     this.state = {
       titlesize: 9,
       randomColor: "#" + ((Math.random() * 0xffffff) << 0).toString(16)
     };
-    this.randcolor = "blue";
+
+    
     setInterval(() => this.tick(), 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerID);
+   
   }
   increasebutton = () => {
     this.setState(state => {
@@ -38,8 +57,9 @@ class Home extends React.Component {
 
     return (
       <div>
-        <h1 style={mystyle}>Mattiwos Website</h1>
-        <p>By Mattiwos B.</p>
+        <h1 style={mystyle}>Mattiwos Belachew</h1>
+        <a href = "/dashboard" target="_top" >dashboard</a>
+       
       </div>
     );
   }

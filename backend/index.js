@@ -10,24 +10,35 @@ const cors = require("cors");
 
 app.use(helmet());
 app.use(morgan("common"));
-
+var wod ={};
 const assert = require("assert");
 const password = "Iag8m4arZ9ymTyPz";
 const { MongoClient } = require("mongodb");
 const Request = require("request");
-function getWordofTheDay(){
-  Request.get("https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=9e9ca34c-7e51-41cc-bf5e-4dd5e8a0f613", (error, response, body) => {
-    if(error) {
-        return error;
-    }
-    console.dir(JSON.parse(body)[0]);
-    return JSON.parse(body)[0];
-  });
+// function getWordofTheDay(){
+//   Request.get("https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=9e9ca34c-7e51-41cc-bf5e-4dd5e8a0f613", (error, response, body) => {
+//     if(error) {
+//         return error;
+//     }
+//     response = response.json()
+//     .then(data => {
+//       console.log(data)
+      
+//     }
 
-} 
+//     // wod = {
+//     //   word: JSON.stringify(JSON.parse(body)[0].meta.id), // string
+//     //   shortdef: JSON.stringify(JSON.parse(body)[0].shortdef), //string array
+//     //   date: JSON.stringify(JSON.parse(body)[0].date)
 
-getWordofTheDay()
-console.log((getWordofTheDay()).meta.id)
+//     // }
+    
+   
+//   });
+
+// } 
+
+
 
 
 
@@ -145,15 +156,17 @@ MongoClient.connect(
 
       });
       
-      socket.on("wordofthedayreq", arg => {
-            console.log("sending word of the day")
+      // socket.on("wordofthedayreq", arg => {
+        
+      //       getWordofTheDay();
+      //       console.log(console.log(JSON.stringify(wod)));
 
-            socket.emit("wordoftheday", {
-              jlist: getWordofTheDay(),
-              test: "sdsd"
-            });
+      //       socket.emit("wordoftheday", {
+      //         wod: JSON.stringify(getWordofTheDay()),
+      //         test: "sdsd"
+      //       });
 
-      });
+      // });
 
 
       socket.on("disconnect", arg => {});

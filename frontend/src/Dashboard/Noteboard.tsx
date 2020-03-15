@@ -53,7 +53,7 @@ class Noteboard extends React.Component<Props, State> {
         return (
             <div>
                 <div style ={mystyle}>
-                <input type="text" id="Noteinput" value = "Note"name="Noteinput"></input>
+                <input type="text" id="Noteinput"  name="Noteinput"></input>
                 <button type="button" onClick= {() => this.sendNote()}>Click Me!</button>
                 
             </div>

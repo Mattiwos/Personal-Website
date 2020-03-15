@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 /* eslint-disable import/first */
 import Guide from "./Dashboard/Guide";
-import Home from "./Homepage/Home.js";
+import Home from "./Homepage/Home";
 
 import "./App.css";
 
