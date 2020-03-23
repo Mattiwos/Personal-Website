@@ -54,7 +54,7 @@ class Noteboard extends React.Component<Props, State> {
             <div>
                 <div style ={mystyle}>
                 <input type="text" id="Noteinput"  name="Noteinput"></input>
-                <button type="button" onClick= {() => this.sendNote()}>Click Me!</button>
+                <button type="button" onClick= {() => this.sendNote()}>Add</button>
                 
             </div>
         
@@ -69,7 +69,12 @@ class Noteboard extends React.Component<Props, State> {
 
     }
     sendNote(){
+        
+        // this.socket.emit('addtolist', {
+        //     name: "Mattiwos",
+        //     note: fnote
 
+        // })
 
     }
 

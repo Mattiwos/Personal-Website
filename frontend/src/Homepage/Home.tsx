@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { Component } from "react";
-
-
+import githubLogo from "../assets/github.png"
+import linkedinLogo from "../assets/linkedin.png"
 interface Props{
     product?: String[];
 
@@ -57,9 +57,26 @@ class Home extends React.Component<Props,States> {
 
     return (
       <div>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"></link>
+
         <h1 style={mystyle}>Mattiwos Belachew</h1>
         <a href = "/dashboard" target="_top" >dashboard</a>
-       
+
+        <div className="container-fluid">
+          <div className="row">
+                   <div className="col-sm">
+                      <div><a href="https://github.com/mattiwos"> <img alt="true" src={githubLogo} width="100" height="100"/> </a>
+                       </div>
+                    </div>
+
+                    <div className="col-sm">
+                       <div><a href="https://www.linkedin.com/in/mattiwos-belachew-2b9807157">
+                          <img alt="true" src={linkedinLogo} width="100" height="100"/>
+                        </a></div>
+                    </div>
+          </div>
+        </div>
+
       </div>
     );
   }

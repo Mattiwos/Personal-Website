@@ -70,13 +70,18 @@ class WordofTheDay extends React.Component<Props, State> {
         const mystyle = {
             padding: "2px",
             fontFamily: "Arial",
+            size: 2,
+            fontSize: "xx-large",
+
             
           };
           
         return (
             <div>
-                <div style ={mystyle}>
-                    <h1>Word of the Day</h1>
+                <div>
+                    <h1 style ={mystyle} >Word of the Day</h1>
+                    <p>Word:</p>
+                    <p>Def:</p>
                 </div>
                 {this.displaywords()}
         
