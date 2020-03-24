@@ -1,3 +1,4 @@
+
 export module App {
   export class Secret {
     getLocalhost(): string {

@@ -44,19 +44,13 @@ class WordofTheDay extends React.Component<Props, State> {
         console.log("socket connected error --> " + err);
         });
 
-        this.socket.on("wordoftheday", (arg: { wod: {word: string} , test: string }) => {
-            console.log(arg.test);
-            this.setState(state => {
-            //   this.componentDidMount();
-              return { wordoftehdaylist: JSON.stringify(arg.wod.word )};
-            });
-          });
 
-        Request.get("https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=9e9ca34c-7e51-41cc-bf5e-4dd5e8a0f613", (error: any, response: any, body: any) => {
+
+        Request.get("https://www.dictionary.com/e/word-of-the-day/", (error: any, response: any, body: any) => {
             if(error) {
                 return error;
             }
-            console.dir(JSON.parse(body))
+            console.dir(JSON.parse(body)[0])
         
           return 0;
         

@@ -91,15 +91,18 @@ class Board extends React.Component<Props, State> {
         <div ref={node => (this.getPageContainer = node)}>
           <div id="hiddenpage"></div>
         </div>
+        <div><h1>Dashboard</h1></div>
         <div className="container">
               <div className="row">
                    <div className="col-sm">
+                     <h2>Notes:</h2>
                      <Noteboard></Noteboard>
                     </div>
                     <div className="col-sm">
-                        One of three columns
+                       email?
                     </div>
                     <div className="col-sm">
+                   
                       <WordofTheDay></WordofTheDay>
                     
                 </div>

@@ -7,9 +7,9 @@ var secret = new App.Secret();
 import React, { Component } from "react";
 /* eslint-disable import/first */
 import {
-  BrowserRouter as Router,
-  Route,
-  BrowserRouter
+  // BrowserRouter as Router,
+  Route
+  // BrowserRouter
 } from "react-router-dom";
 
 import io from "socket.io-client";

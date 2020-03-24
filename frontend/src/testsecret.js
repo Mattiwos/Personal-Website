@@ -1,5 +1,7 @@
+// eslint-disable-next-line
 "use strict";
 exports.__esModule = true;
+// eslint-disable-next-line
 var App;
 (function(App) {
   var Secret = /** @class */ (function() {

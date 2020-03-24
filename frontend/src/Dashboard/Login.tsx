@@ -62,7 +62,7 @@ class Login extends React.Component<Props, State> {
     console.log("response");
 
     this.state = {
-      key: "None"
+      key: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -76,17 +76,18 @@ class Login extends React.Component<Props, State> {
     return (
       <div>
         <div className="authkey">
-          <label htmlFor="key">Auth-Key </label>
+          <label style = {{color: "red",}} htmlFor="key">Auth-Key </label>
 
           <input
+            style = {{background: "transparent",color: "red",textAlign: "center",maxWidth: "fit-content"}}
             className="u-full-width"
             type="text"
             id="key"
             value={this.state.key}
             onChange={this.handleChange}
             name="key"
-          ></input>
-          <button id="submit" type="button" onClick={() => this.buttonclick()}>
+          ></input><br></br>
+          <button style = {{background: "transparent",color: "red"}} id="submit" type="button" onClick={() => this.buttonclick()}>
             Submit
           </button>
         </div>
