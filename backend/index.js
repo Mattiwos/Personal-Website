@@ -39,12 +39,13 @@ const Request = require("request");
 // } 
 
 
+{/* <input type="checkbox" checked="checked"></input> */}
 
-
-const url = "mongodb://127.0.0.1:27017";
-const dbName = "NoteApp";
+//const url = "mongodb://127.0.0.1:27017";
+const url ="mongodb+srv://noteapp:<pass>@cluster0-xmjwc.mongodb.net/test?retryWrites=true&w=majority"; 
+const dbName = "NoteApp2";
 let db;
-const collname = "Notes";
+const collname = "Note";
 
 app.options("*", cors()); // include before other routes
 app.get("/products/:id", cors(), function(req, res, next) {
@@ -81,25 +82,39 @@ MongoClient.connect(
 
     // Storing a reference to the database so you can use it later
     db = client.db(dbName);
+
+
     console.log(`Connected MongoDB: ${url}`);
     console.log(`Database: ${dbName}`);
-    function addnote(name, strnote) {
-      db.collection(collname).insertOne({
+    ///mongo tasks
+
+    async function addnote(name, strnote) {
+      await db.collection(collname).insertOne({
         name: name,
         note: strnote
-      });
+      }).then(() => console.log("Add note completed"))
+      .catch((err) => console.log("😅","Add note note completed " + err))
     }
 
-    function updatenote() {
-      db.collection(collname)
+
+    function currentlist() { return db.collection(collname).find().toArray() }
+    
+    // console.log(currentlist())
+
+    
+    
+    
+    async function updatenote() {
+      await db.collection(collname)
         .find({})
         .toArray(function(err, result) {
           if (err) throw err;
           return result;
         });
     }
+    
+   
 
-    console.log(updatenote());
 
     var spkey = keygenerator.session_id();
     io.on("connection", socket => {
@@ -126,10 +141,13 @@ MongoClient.connect(
       });
       socket.on("addtolist", arg => {
         addnote(arg.name, arg.note);
+        console.log(updatenote());
+
       });
       socket.on("update", arg => {
         socket.emit("currlist", updatenote());
       });
+
       socket.on("sessionkey", arg => {
 
         if (arg.sesskey == spkey) {
@@ -142,6 +160,19 @@ MongoClient.connect(
           });
         }
       });
+
+      socket.on('reloadnote', async arg =>{
+        if (arg.sessid == spkey){
+          socket.emit('notes',{
+            notes: await currentlist()
+        
+          })
+          console.log("reloadnote")
+
+        }
+        
+      })
+
       socket.on("homepagereq", arg => {
         if (arg != null || arg != undefined){
           if (arg.sesskey == spkey) {

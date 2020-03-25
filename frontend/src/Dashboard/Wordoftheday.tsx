@@ -2,7 +2,7 @@ import { App } from "../testsecret";
 var secret = new App.Secret();
 /* eslint-disable import/first */
 import * as React from "react";
-import Request from "request";
+// import Request from "request";
 
 import io from "socket.io-client";
 
@@ -19,6 +19,8 @@ interface State {
 class WordofTheDay extends React.Component<Props, State> {
     baseUrl: string;
     socket: SocketIOClient.Socket;
+    tempid!: string; //alldya
+ //alldya
    
     constructor(props: Props, state: State){
         super(props);
@@ -44,20 +46,25 @@ class WordofTheDay extends React.Component<Props, State> {
         console.log("socket connected error --> " + err);
         });
 
+        // Request.get("http://ipinfo.io", (error: any, response: any) => {
+        //     if(error) {
+        //         return error;
+        //     }    
+        //     alert(response.ip);
+        // }, "jsonp").then((data:any) => {
+        //     // Use data
+        // })
+        // .catch((err:any) => {
+        //     // Handle err
+        // });
+      
+       
 
-
-        Request.get("https://www.dictionary.com/e/word-of-the-day/", (error: any, response: any, body: any) => {
-            if(error) {
-                return error;
-            }
-            console.dir(JSON.parse(body)[0])
-        
-          return 0;
-        
-        });
+      
 
 
     }
+   
 
 
     render(){
@@ -73,7 +80,8 @@ class WordofTheDay extends React.Component<Props, State> {
         return (
             <div>
                 <div>
-                    <h1 style ={mystyle} >Word of the Day</h1>
+                    {/* <h1 style ={mystyle} >Word of the Day</h1> */}
+                    <br/>
                     <p>Word:</p>
                     <p>Def:</p>
                 </div>

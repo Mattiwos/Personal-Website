@@ -18,6 +18,8 @@ interface Props {
 interface State {
   hasError: boolean;
   htmltxt: string;
+  randomColor: string;
+  random2Color:string;
   //quantities: { [key: string]: number};  //represents elements of the page that could change
 }
 
@@ -43,7 +45,10 @@ class Board extends React.Component<Props, State> {
     });
     this.state = {
       hasError: false,
-      htmltxt: ""
+      htmltxt: "",
+      randomColor: "red",
+      random2Color: "blue",
+
     };
 
     this.socket.on("connect", () => {
@@ -65,6 +70,9 @@ class Board extends React.Component<Props, State> {
     });
 
     this.getPage = this.getPage.bind(this);
+    setInterval(() => this.tick(), 1000);
+
+
   }
 
   getPage() {
@@ -82,6 +90,21 @@ class Board extends React.Component<Props, State> {
     if (this.getPageContainer != null)
       this.getPageContainer.appendChild(this.getPage());
   }
+  tick(){
+    this.changeTcolor()
+
+  }
+  changeTcolor = () => {
+    this.setState(state => {
+      // Important: read `state` instead of `this.state` when updating.
+      return {
+        randomColor: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
+        random2Color: "#" + ((Math.random() * 0xffffff) << 0).toString(16)
+      };
+
+    });
+
+  };
 
   render() {
     return (
@@ -91,18 +114,20 @@ class Board extends React.Component<Props, State> {
         <div ref={node => (this.getPageContainer = node)}>
           <div id="hiddenpage"></div>
         </div>
-        <div><h1>Dashboard</h1></div>
+        <div><h1 style = {{color: this.state.randomColor}} >Dashboard</h1>
+        <p style = {{color: this.state.random2Color}} >By Mattiwos B.</p>
+        </div>
         <div className="container">
               <div className="row">
                    <div className="col-sm">
-                     <h2>Notes:</h2>
+                     <h2 style = {{color: "red"}} >Notes:</h2>
                      <Noteboard></Noteboard>
                     </div>
                     <div className="col-sm">
                        email?
                     </div>
                     <div className="col-sm">
-                   
+                    <h2 style = {{color: "red"}} >WOD:</h2>
                       <WordofTheDay></WordofTheDay>
                     
                 </div>

@@ -35,7 +35,7 @@ class Home extends React.Component<Props,States> {
   componentWillUnmount() {
    
   }
-  increasebutton = () => {
+  changeTcolor = () => {
     this.setState(state => {
       // Important: read `state` instead of `this.state` when updating.
       return {
@@ -45,7 +45,7 @@ class Home extends React.Component<Props,States> {
     });
   };
   tick() {
-    this.increasebutton();
+    this.changeTcolor();
   }
 
   render() {

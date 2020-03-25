@@ -20,6 +20,8 @@ function App() {
             </div>
           )}
         />
+  
+
         <Route
           path="/dashboard"
           render={() => (
