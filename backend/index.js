@@ -45,7 +45,10 @@ const Request = require("request");
 
 
 //const url = "mongodb://127.0.0.1:27017";
-const url ="mongodb+srv://noteapp:@cluster0-xmjwc.mongodb.net/test?retryWrites=true&w=majority"; 
+const secret = require('./secret.js')
+
+const url = secret.mongodburl; 
+
 const dbName = "NoteApp2";
 let db;
 const collname = "Note";
