@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 /* eslint-disable import/first */
 import Guide from "./Dashboard/Guide";
 import Home from "./Homepage/Home";
+import Display from "./LiveStream/Display";
 
 import "./App.css";
 
@@ -20,6 +21,8 @@ function App() {
             </div>
           )}
         />
+
+        
   
 
         <Route
@@ -30,6 +33,19 @@ function App() {
             </div>
           )}
         />
+
+
+        <Route
+          exact={true}
+          path="/live"
+          render={() => (
+            <div className="App">
+              <Display />
+            </div>
+          )}
+        />  
+
+
       </div>
     </BrowserRouter>
   );

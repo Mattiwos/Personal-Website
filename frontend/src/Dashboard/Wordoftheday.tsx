@@ -68,15 +68,8 @@ class WordofTheDay extends React.Component<Props, State> {
 
 
     render(){
-        const mystyle = {
-            padding: "2px",
-            fontFamily: "Arial",
-            size: 2,
-            fontSize: "xx-large",
-
-            
-          };
-          
+     
+     
         return (
             <div>
                 <div>

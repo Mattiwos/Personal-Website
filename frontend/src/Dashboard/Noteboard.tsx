@@ -16,6 +16,7 @@ interface State {
     noteinput:string;
     notes?: any;
     listNotes?: any;
+    
 
 
 }
@@ -26,6 +27,7 @@ class Noteboard extends React.Component<Props, State> {
     tempip!: string;
     ul: any;
     listItems: any;
+    prevclick?: any;
 
     constructor(props: Props, state: State){
         super(props);
@@ -63,6 +65,10 @@ class Noteboard extends React.Component<Props, State> {
         this.showlist()
 
         setInterval(() => this.tick(), 1000);
+
+
+       
+
     }
     reloadnotes(){
         this.socket.emit('reloadnote',{
@@ -83,10 +89,21 @@ class Noteboard extends React.Component<Props, State> {
         
         // return this.tempid;
         this.handleChange = this.handleChange.bind(this);
+        this.handleCheck = this.handleCheck.bind(this)
     }
     handleChange(event: { target: { value: string } }) {
         this.setState({ noteinput: event.target.value });
     }
+
+    handleCheck(event: {target: any,currentTarget: any}) {
+       if (this.prevclick === event.currentTarget.dataset.id){
+            this.removeNote(event.currentTarget.dataset.id)
+
+       }
+       this.prevclick = event.currentTarget.dataset.id
+      
+        
+     }
     
       tick(){
         this.reloadnotes();
@@ -105,7 +122,8 @@ class Noteboard extends React.Component<Props, State> {
           
         return (
             <div>
-
+                
+                 
                 <div>
                     <ul style={{color: "aliceblue",
                     font: "message-box",
@@ -115,7 +133,10 @@ class Noteboard extends React.Component<Props, State> {
                     margin: "0",
                     maxHeight: "100px",
                     maxWidth: "100%"
-                    }}> {this.state.listNotes}</ul>
+                    }}> {this.state.listNotes}
+                   
+                    </ul>
+
                     </div>
 
                     <br/>
@@ -146,10 +167,17 @@ class Noteboard extends React.Component<Props, State> {
             var data = this.state.notes
             
             this.listItems = data.map((notes: any) =>
-                <li key = {notes._id} >{notes.note}</li>
+               
+                <li data-id={notes._id} onClick={this.handleCheck} key = {notes._id} >{notes.note}</li>
+
+                
+                
+             
+
             );
-            this.setState({listNotes: this.listItems })
             console.log(this.listItems)
+            this.setState({listNotes: this.listItems })
+        
 
             // const numbers = [1, 2, 3, 4, 5];
             //     const listItems = numbers.map((number) =>
@@ -175,6 +203,13 @@ class Noteboard extends React.Component<Props, State> {
         })
 
         
+
+    }
+    removeNote(id: string){
+        this.socket.emit('removeFromList', {
+            id: id,
+            sessid: getCookie('key')
+        })
 
     }
 

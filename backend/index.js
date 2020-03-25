@@ -13,7 +13,10 @@ app.use(morgan("common"));
 var wod ={};
 const assert = require("assert");
 const password = "Iag8m4arZ9ymTyPz";
-const { MongoClient } = require("mongodb");
+// const { MongoClient } = require("mongodb");
+var mongodb = require('mongodb');
+
+const MongoClient = mongodb.MongoClient
 const Request = require("request");
 // function getWordofTheDay(){
 //   Request.get("https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=9e9ca34c-7e51-41cc-bf5e-4dd5e8a0f613", (error, response, body) => {
@@ -39,10 +42,10 @@ const Request = require("request");
 // } 
 
 
-{/* <input type="checkbox" checked="checked"></input> */}
+
 
 //const url = "mongodb://127.0.0.1:27017";
-const url ="mongodb+srv://noteapp:<pass>@cluster0-xmjwc.mongodb.net/test?retryWrites=true&w=majority"; 
+const url ="mongodb+srv://noteapp:@cluster0-xmjwc.mongodb.net/test?retryWrites=true&w=majority"; 
 const dbName = "NoteApp2";
 let db;
 const collname = "Note";
@@ -88,14 +91,21 @@ MongoClient.connect(
     console.log(`Database: ${dbName}`);
     ///mongo tasks
 
-    async function addnote(name, strnote) {
-      await db.collection(collname).insertOne({
+    async function addnote(name, strnote,collectionName = collname) {
+      await db.collection(collectionName).insertOne({
         name: name,
         note: strnote
       }).then(() => console.log("Add note completed"))
       .catch((err) => console.log("😅","Add note note completed " + err))
     }
 
+    function removeNote(id,collectionName){
+      db.collection(collectionName).deleteOne({_id: new mongodb.ObjectID(id) }, (err, obj)=>{
+        if (err) throw err;
+        console.log(obj.result.n + " document(s) deleted");
+
+      })
+    }
 
     function currentlist() { return db.collection(collname).find().toArray() }
     
@@ -104,14 +114,14 @@ MongoClient.connect(
     
     
     
-    async function updatenote() {
-      await db.collection(collname)
-        .find({})
-        .toArray(function(err, result) {
-          if (err) throw err;
-          return result;
-        });
-    }
+    // async function updatenote() {
+    //   await db.collection(collname)
+    //     .find({})
+    //     .toArray(function(err, result) {
+    //       if (err) throw err;
+    //       return result;
+    //     });
+    // }
     
    
 
@@ -141,12 +151,10 @@ MongoClient.connect(
       });
       socket.on("addtolist", arg => {
         addnote(arg.name, arg.note);
-        console.log(updatenote());
+     
 
       });
-      socket.on("update", arg => {
-        socket.emit("currlist", updatenote());
-      });
+      
 
       socket.on("sessionkey", arg => {
 
@@ -167,10 +175,20 @@ MongoClient.connect(
             notes: await currentlist()
         
           })
-          console.log("reloadnote")
+          
 
         }
         
+      })
+      socket.on('liveClientSocket1',arg=>{
+      
+        io.emit('liveFeed', arg)
+      })
+      socket.on('removeFromList', (arg)=>{
+        if (arg.sessid == spkey){
+          removeNote(arg.id,collname)
+        }
+
       })
 
       socket.on("homepagereq", arg => {
