@@ -1,15 +1,20 @@
-// eslint-disable-next-line
-"use strict";
+
 exports.__esModule = true;
+//http://192.168.42.81:3000
+//
 // eslint-disable-next-line
 var App;
-(function(App) {
-  var Secret = /** @class */ (function() {
-    function Secret() {}
-    Secret.prototype.getLocalhost = function() {
-      return "http://localhost:8080/";
-    };
-    return Secret;
-  })();
-  App.Secret = Secret;
-})((App = exports.App || (exports.App = {})));
+(function (App) {
+    var Secret = /** @class */ (function () {
+        function Secret() {
+        }
+        Secret.prototype.getLocalhost = function () {
+            return "http://localhost:8080";
+        };
+        Secret.prototype.getIP = function () {
+            return "http://192.168.42.81:8080";
+        };
+        return Secret;
+    }());
+    App.Secret = Secret;
+})(App = exports.App || (exports.App = {}));

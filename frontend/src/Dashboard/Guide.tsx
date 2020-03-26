@@ -34,7 +34,7 @@ class Guide extends React.Component<Props, State> {
       displayboard: false
     };
 
-    this.baseUrl = secret.getLocalhost();
+    this.baseUrl = secret.getIP();
     this.socket = io(this.baseUrl, {
       reconnectionDelay: 1000,
       reconnection: true,

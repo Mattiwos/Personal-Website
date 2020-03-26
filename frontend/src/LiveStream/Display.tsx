@@ -11,6 +11,7 @@ interface Props{
 }
 interface States{
    liveimg: any;
+   imgrendered: any;
 
 
 
@@ -23,10 +24,11 @@ class Display extends React.Component<Props,States> {
 
   constructor(props: Props, state: States) {
     super(props);
-    this.baseUrl = secret.getLocalhost();
+    this.baseUrl = secret.getIP();
    
     this.state = {
-        liveimg: undefined
+        liveimg: undefined,
+        imgrendered: undefined
       };
 
     this.socket = io(this.baseUrl, {
@@ -63,14 +65,15 @@ class Display extends React.Component<Props,States> {
 
   
   tick() {
-   
+    // refreshPage()
+    
   }
   imgrender(){
       if (this.state.liveimg === null ||this.state.liveimg === undefined) {
         return <div></div>
       }
       else{
-          return <img alt = "true" id="Feed" src = {`data:image/png;base64,${this.state.liveimg}`} ></img>;
+          return <img alt = "true" id="Feed" src = {`data:image/png;base64,${this.state.liveimg}` } ></img>;
       }
   }
 
@@ -119,6 +122,10 @@ function encode (input: any) {
                   keyStr.charAt(enc3) + keyStr.charAt(enc4);
     }
     return output;
+}
+// eslint-disable-next-line
+function refreshPage(){ 
+  window.location.reload(); 
 }
 
 

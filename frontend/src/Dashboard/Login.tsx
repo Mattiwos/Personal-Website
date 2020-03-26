@@ -27,7 +27,7 @@ class Login extends React.Component<Props, State> {
 
   constructor(props: Props, state: State) {
     super(props);
-    this.baseUrl = secret.getLocalhost();
+    this.baseUrl = secret.getIP();
     this.socket = io(this.baseUrl, {
       reconnectionDelay: 1000,
       reconnection: true,
@@ -56,6 +56,7 @@ class Login extends React.Component<Props, State> {
       }
       if (arg.wrong === false) {
         window.location.href = `/dashboard/homepage`;
+        gotohomepage()
         document.cookie = `key= ${arg.key}`;
       }
     });
@@ -102,4 +103,8 @@ class Login extends React.Component<Props, State> {
     console.log("sent");
   }
 }
+function gotohomepage(){
+  window.location.href = `/dashboard/homepage`
+}
+
 export default Login;

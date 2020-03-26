@@ -42,7 +42,7 @@ var Login = /** @class */ (function(_super) {
   __extends(Login, _super);
   function Login(props, state) {
     var _this = _super.call(this, props) || this;
-    _this.baseUrl = secret.getLocalhost();
+    _this.baseUrl = secret.getIP();
     _this.socket = socket_io_client_1.default(_this.baseUrl, {
       reconnectionDelay: 1000,
       reconnection: true,

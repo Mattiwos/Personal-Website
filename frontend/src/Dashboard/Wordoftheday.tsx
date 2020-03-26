@@ -25,7 +25,7 @@ class WordofTheDay extends React.Component<Props, State> {
     constructor(props: Props, state: State){
         super(props);
 
-        this.baseUrl = secret.getLocalhost();
+        this.baseUrl = secret.getIP();
         this.state = {wordoftehdaylist: undefined};
 
         this.socket = io(this.baseUrl, {

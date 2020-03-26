@@ -33,7 +33,7 @@ class Board extends React.Component<Props, State> {
   constructor(props: Props, state: State) {
     super(props);
     // this.state = state;
-    this.baseUrl = secret.getLocalhost();
+    this.baseUrl = secret.getIP();
     this.socket = io(this.baseUrl, {
       reconnectionDelay: 1000,
       reconnection: true,
