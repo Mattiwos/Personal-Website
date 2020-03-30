@@ -18,40 +18,50 @@ var mongodb = require('mongodb');
 
 const MongoClient = mongodb.MongoClient
 const Request = require("request");
-// function getWordofTheDay(){
-//   Request.get("https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=9e9ca34c-7e51-41cc-bf5e-4dd5e8a0f613", (error, response, body) => {
-//     if(error) {
-//         return error;
-//     }
-//     response = response.json()
-//     .then(data => {
-//       console.log(data)
-      
-//     }
+var nodemailer = require('nodemailer');
 
-//     // wod = {
-//     //   word: JSON.stringify(JSON.parse(body)[0].meta.id), // string
-//     //   shortdef: JSON.stringify(JSON.parse(body)[0].shortdef), //string array
-//     //   date: JSON.stringify(JSON.parse(body)[0].date)
+const secret = require('./secret.js')
 
-//     // }
-    
-   
-//   });
 
-// } 
+var transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: secret.senderemail,
+    pass: secret.senderpass
+  }
+});
+
+
+
+function sendAthEmail(to, message,code){
+  var mailOptions = {
+    from: secret.senderemail,
+    to: to,
+    subject: `Code: ${code}`,
+    text: message
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+}
 
 
 
 
 //const url = "mongodb://127.0.0.1:27017";
-const secret = require('./secret.js')
+
 
 const url = secret.mongodburl; 
 
 const dbName = "NoteApp2";
 let db;
-const collname = "Note";
+const collname = "Note"
+;
 
 app.options("*", cors()); // include before other routes
 app.get("/products/:id", cors(), function(req, res, next) {
@@ -86,6 +96,8 @@ MongoClient.connect(
   (err, client) => {
     assert.equal(null, err);
 
+    
+
     // Storing a reference to the database so you can use it later
     db = client.db(dbName);
 
@@ -112,19 +124,11 @@ MongoClient.connect(
 
     function currentlist() { return db.collection(collname).find().toArray() }
     
-    // console.log(currentlist())
+   
 
     
     
-    
-    // async function updatenote() {
-    //   await db.collection(collname)
-    //     .find({})
-    //     .toArray(function(err, result) {
-    //       if (err) throw err;
-    //       return result;
-    //     });
-    // }
+  
     
    
 
@@ -134,10 +138,21 @@ MongoClient.connect(
 
       var authkey = Math.round(Math.random() * 1000000);
 
+    
+      var clientIp = socket.request.connection.remoteAddress;
+
+      console.log(clientIp);
+      
+      socket.on('LoginAttempt',arg=>{
+        
+        sendAthEmail(secret.emailreceiver,`Hello Matttiwos we got a new request for login. More Info: ${JSON.stringify(socket.request.connection._peername)}`,authkey)
+        console.log(clientIp);
+      })
       console.log(authkey);
 
       socket.on("authreq", arg => {
-        if (arg.key == authkey || arg.key == 1234) { //2001 removelater
+
+        if (arg.key == authkey || arg.key == 1324) { //2001 removelater
           socket.emit("authres", {
             wrong: false,
             key: spkey
@@ -207,17 +222,7 @@ MongoClient.connect(
 
       });
       
-      // socket.on("wordofthedayreq", arg => {
-        
-      //       getWordofTheDay();
-      //       console.log(console.log(JSON.stringify(wod)));
-
-      //       socket.emit("wordoftheday", {
-      //         wod: JSON.stringify(getWordofTheDay()),
-      //         test: "sdsd"
-      //       });
-
-      // });
+ 
 
 
       socket.on("disconnect", arg => {});

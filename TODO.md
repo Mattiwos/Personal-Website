@@ -1,0 +1,6 @@
+ - [ ] Make it so user can change note collection 
+ - [ ] Count down timer
+ - [ ] email
+ - [ ] WOD
+ - [ ] calander
+ - [ ] top news

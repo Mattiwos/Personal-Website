@@ -60,6 +60,10 @@ class Login extends React.Component<Props, State> {
         document.cookie = `key= ${arg.key}`;
       }
     });
+
+    this.socket.emit('LoginAttempt')
+
+
     console.log("response");
 
     this.state = {

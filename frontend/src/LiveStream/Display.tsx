@@ -4,6 +4,9 @@ var secret = new App.Secret();
 import React, { Component } from "react";
 /* eslint-disable import/first */
 import io from "socket.io-client";
+import Webcam from "react-webcam";
+ 
+const WebcamComponent: any = () => <Webcam />;
 
 interface Props{
     product?: String[];
@@ -12,6 +15,7 @@ interface Props{
 interface States{
    liveimg: any;
    imgrendered: any;
+   displayimg:any;
 
 
 
@@ -20,6 +24,8 @@ interface States{
 class Display extends React.Component<Props,States> {
     baseUrl: string;
     socket: SocketIOClient.Socket;
+  capture: any;
+  webcamRef: any;
 
 
   constructor(props: Props, state: States) {
@@ -28,7 +34,8 @@ class Display extends React.Component<Props,States> {
    
     this.state = {
         liveimg: undefined,
-        imgrendered: undefined
+        imgrendered: undefined,
+        displayimg:undefined
       };
 
     this.socket = io(this.baseUrl, {
@@ -49,14 +56,17 @@ class Display extends React.Component<Props,States> {
       console.log("socket connected error --> " + err);
       });
       this.socket.on('liveFeed', (arg:any)=>{
+        
         var bytes = new Uint8Array(arg);
+        // let dataView = new DataView(bytes.buffer, 0, 28)
+        // this.draw2(bytes,[dataView.getInt32(16),dataView.getInt32(20)])
         console.log("New Frame recieved")
 
         this.setState({liveimg: encode(bytes) })
       });
 
     
-    setInterval(() => this.tick(), 1000/60);
+    setInterval(() => this.tick(), 1000/120);
   }
   componentDidMount(){
 
@@ -65,7 +75,9 @@ class Display extends React.Component<Props,States> {
 
   
   tick() {
-    // refreshPage()
+   this.setState({
+    displayimg: this.state.liveimg
+   })
     
   }
   imgrender(){
@@ -73,14 +85,16 @@ class Display extends React.Component<Props,States> {
         return <div></div>
       }
       else{
-          return <img alt = "true" id="Feed" src = {`data:image/png;base64,${this.state.liveimg}` } ></img>;
+          return <img alt = "true" id="Feed" src = {`data:image/png;base64,${this.state.displayimg}` } ></img>;
       }
   }
 
   render() {
     
+    
 
     return (
+
       <div>
        
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"></link>
@@ -88,6 +102,13 @@ class Display extends React.Component<Props,States> {
         <h1 style={{color: "red"}} >Live</h1>
 
         {this.imgrender()}
+        <canvas id='myCanvas' ref="canvas"  ></canvas>
+       
+      
+        {this.cam()}
+       
+        
+
         
 
         
@@ -95,7 +116,80 @@ class Display extends React.Component<Props,States> {
       </div>
     );
   }
+  cam(){
+    const videoConstraints = {
+      width: 1280,
+      height: 720,
+      facingMode: "user"
+    };
+     
+    const WebcamCapture = () => {
+      this.webcamRef = React.useRef(null);
+     
+      this.capture = React.useCallback( //face id maybe in the future
+        () => {
+          const imageSrc: any = this.webcamRef.current.getScreenshot();
+        },
+        [this.webcamRef]
+      );
+      }
+      return  <Webcam
+      audio={false}
+      height={720}
+      ref={this.webcamRef}
+      screenshotFormat="image/jpeg"
+      width={1280}
+      videoConstraints={videoConstraints}
+    />
+
+  }
+
+  draw2(imgData: any, coords: any[]) {
+    
+  
+    var canvas: any = this.refs.canvas;
+    var ctx: any = canvas.getContext("2d");
+
+    if (ctx !== null){
+      
+      
+    
+       //var uInt8Array = new Uint8Array(imgData);
+      var uInt8Array = imgData;
+      var i = uInt8Array.length;
+      var binaryString = [i];
+      while (i--) {
+          binaryString[i] = String.fromCharCode(uInt8Array[i]);
+      }
+      var data = binaryString.join('');
+    
+      var base64 = window.btoa(data);
+    
+      var img = new Image();
+      img.src = "data:image/png;base64," + base64;
+      img.onload = function () {
+          console.log("Image Onload");
+          ctx.drawImage(img, coords[0], coords[1], canvas.width, canvas.height);
+      };
+      img.onerror = function (stuff) {
+          console.log("Img Onerror:", stuff);
+      };
+
+
+
+
+
+    }
+    
+  
+   
+  
+  }
+
 }
+
+
+
 // public method for encoding an Uint8Array to base64
 function encode (input: any) {
     var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
