@@ -5,23 +5,23 @@ MongoDB to store notes/tasks
 
 ### ToDo:
 
-- [ ] server
+- [x] server
   - [x] express
   - [x] morgan
   - [x] helmet
-  - [ ] cors
+
   - [x] mongodb
   - [x] socketio
-  - [ ] API
+
 - [ ] frontend
-  - [ ] skeleton css
+  - [x] bootstrap css
   - [x] login page
     - [x] auth key
-  - [ ] Display
-    - [ ] Reactjs
+  - [x] Display
+    - [x] Reactjs
       - [ ] ?
-    - [ ] Notes
-    - [ ] cap. of adding to the list
+    - [x] Notes
+    - [x] cap. of adding to the list
 - [x] Database
   - [x] MongoDB
 - [ ] Python client
