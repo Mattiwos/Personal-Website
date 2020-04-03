@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import io from "socket.io-client";
 import Webcam from "react-webcam";
  
-const WebcamComponent: any = () => <Webcam />;
+// const WebcamComponent: any = () => <Webcam />;
 
 interface Props{
     product?: String[];
@@ -26,12 +26,14 @@ class Display extends React.Component<Props,States> {
     socket: SocketIOClient.Socket;
   capture: any;
   webcamRef: any;
+  videoTag: any;
 
 
   constructor(props: Props, state: States) {
     super(props);
     this.baseUrl = secret.getIP();
-   
+    this.videoTag = React.createRef()
+    
     this.state = {
         liveimg: undefined,
         imgrendered: undefined,
@@ -68,10 +70,14 @@ class Display extends React.Component<Props,States> {
     
     setInterval(() => this.tick(), 1000/120);
   }
-  componentDidMount(){
-
-    
+  componentDidMount() {
+    // getting access to webcam
+   navigator.mediaDevices
+    .getUserMedia({video: true})
+    .then(stream => this.videoTag.current.srcObject = stream)
+    .catch(console.log);
   }
+
 
   
   tick() {
@@ -102,37 +108,70 @@ class Display extends React.Component<Props,States> {
         <h1 style={{color: "red"}} >Live</h1>
 
         {this.imgrender()}
-        <canvas id='myCanvas' ref="canvas"  ></canvas>
+       
        
       
-        {this.cam()}
-       
+        <video 
+        ref={this.videoTag}
+        autoPlay
+
+      />  
         
 
-        
+      {this.videoStream()}
 
         
 
       </div>
     );
   }
+
+
+  hasGetUserMedia() {
+    return !!(navigator.mediaDevices &&
+      navigator.mediaDevices.getUserMedia);
+  }
+  test(){
+    if (this.hasGetUserMedia()) {
+      alert(navigator.mediaDevices.getUserMedia())
+    } else {
+      alert('getUserMedia() is not supported by your browser');
+
+    }
+  }
+  videoStream(){
+    const constraints = { //asks for permision 
+      video: true,
+      audio: true
+    };
+
+    
+   
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {this.videoTag.current.srcObject = stream})
+    .catch((error:any)=>{alert("error "+ error) });
+
+  }
+
   cam(){
     const videoConstraints = {
       width: 1280,
       height: 720,
       facingMode: "user"
     };
+      // eslint-disable-next-line
+    // const WebcamCapture = () => {
+    //   this.webcamRef = React.useRef(null);
      
-    const WebcamCapture = () => {
-      this.webcamRef = React.useRef(null);
-     
-      this.capture = React.useCallback( //face id maybe in the future
-        () => {
-          const imageSrc: any = this.webcamRef.current.getScreenshot();
-        },
-        [this.webcamRef]
-      );
-      }
+    //   this.capture = React.useCallback( //face id maybe in the future
+    //     () => {
+    //       const imageSrc: any = this.webcamRef.current.getScreenshot();
+    //     },
+    //     [this.webcamRef]
+    //   );
+
+    //   }
+      
       return  <Webcam
       audio={false}
       height={720}
@@ -142,48 +181,6 @@ class Display extends React.Component<Props,States> {
       videoConstraints={videoConstraints}
     />
 
-  }
-
-  draw2(imgData: any, coords: any[]) {
-    
-  
-    var canvas: any = this.refs.canvas;
-    var ctx: any = canvas.getContext("2d");
-
-    if (ctx !== null){
-      
-      
-    
-       //var uInt8Array = new Uint8Array(imgData);
-      var uInt8Array = imgData;
-      var i = uInt8Array.length;
-      var binaryString = [i];
-      while (i--) {
-          binaryString[i] = String.fromCharCode(uInt8Array[i]);
-      }
-      var data = binaryString.join('');
-    
-      var base64 = window.btoa(data);
-    
-      var img = new Image();
-      img.src = "data:image/png;base64," + base64;
-      img.onload = function () {
-          console.log("Image Onload");
-          ctx.drawImage(img, coords[0], coords[1], canvas.width, canvas.height);
-      };
-      img.onerror = function (stuff) {
-          console.log("Img Onerror:", stuff);
-      };
-
-
-
-
-
-    }
-    
-  
-   
-  
   }
 
 }
@@ -202,7 +199,7 @@ function encode (input: any) {
         chr2 = i < input.length ? input[i++] : Number.NaN; // Not sure if the index 
         chr3 = i < input.length ? input[i++] : Number.NaN; // checks are needed here
 
-        enc1 = chr1 >> 2;
+        enc1 = chr1 >> 2; //moves bit over
         enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
         enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
         enc4 = chr3 & 63;
