@@ -40,7 +40,7 @@ export default class Schedule extends React.Component<Props,States>{
             console.log("socket connected error --> " + err);
         });
         this.socket.on("collList", (arg: {list:any, collname: string} ) => {
-            if (arg.collname == 'Schedule'){
+            if (arg.collname === 'Schedule'){
                 this.setState({schedule: arg.list});
             }
            
@@ -52,7 +52,7 @@ export default class Schedule extends React.Component<Props,States>{
     }
     reloadnotes(){
         this.socket.emit('reqcolllist',{
-            sessid:getCookie('key'),
+            sessid: getCookie('key'),
             collname: 'Schedule'
         })
     }

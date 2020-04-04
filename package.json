@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Mattiwos/2020-Website#readme",
   "dependencies": {
     "concurrently": "^5.1.0",
-    "package": "^1.0.1"
+    "package": "^1.0.1",
+    "package.json": "^2.0.1"
   }
 }

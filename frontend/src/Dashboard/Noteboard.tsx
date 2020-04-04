@@ -52,7 +52,7 @@ class Noteboard extends React.Component<Props, State> {
         });
         
         this.socket.on("collList", (arg: { list:any, collname: string} ) => {
-            if (arg.collname == 'Notes'){
+            if (arg.collname === 'Notes'){
                 this.setState({notes: arg.list});
             }
            

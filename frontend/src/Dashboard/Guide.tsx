@@ -118,7 +118,11 @@ class Guide extends React.Component<Props, State> {
       return (
         
         <div>
-          <h1 style = {{position:"fixed",left: `${this.state.x}%`,bottom: `${this.state.y}%`  }}>❄️</h1>
+
+          <h1 style = {{position:"fixed",left: `${this.state.x}%`,bottom: `${this.state.y}%`  }}>
+            
+            <span role = "img" aria-label="snow"> ❄️</span> 
+          ️</h1>
         </div>
 
       );

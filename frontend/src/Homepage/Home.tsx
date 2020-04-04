@@ -12,7 +12,7 @@ interface Props{
 }
 interface States{
     titlesize: number;
-    randomColor: String;
+    randomColor: string;
 
 
 
@@ -67,7 +67,7 @@ class Home extends React.Component<Props,States> {
         {/* <canvas id="myCanvas" width="100" height="100"></canvas>
         <Snow id = {'myCanvas'}/> */}
 
-        <h1 style={mystyle}>Mattiwos Belachew</h1>
+        <h1 style={mystyle} >Mattiwos Belachew</h1>
         <a href = "/dashboard" target="_top" >Dashboard</a>
 
         <div className="container-fluid">
