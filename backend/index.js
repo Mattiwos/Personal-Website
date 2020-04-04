@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
+
 var server = app.listen(port);
+
 var io = require("socket.io").listen(server);
 const keygenerator = require("keygenerator");
 const helmet = require("helmet");
@@ -12,7 +14,7 @@ app.use(helmet());
 app.use(morgan("common"));
 var wod ={};
 const assert = require("assert");
-const password = "Iag8m4arZ9ymTyPz";
+
 // const { MongoClient } = require("mongodb");
 var mongodb = require('mongodb');
 
@@ -58,9 +60,11 @@ function sendAthEmail(to, message,code){
 
 const url = secret.mongodburl; 
 
-const dbName = "NoteApp2";
-let db;
+const dbName = "Personal-Website";
+
+
 const collname = "Note"
+
 ;
 
 app.options("*", cors()); // include before other routes
@@ -99,7 +103,7 @@ MongoClient.connect(
     
 
     // Storing a reference to the database so you can use it later
-    db = client.db(dbName);
+    var db = client.db(dbName);
 
 
     console.log(`Connected MongoDB: ${url}`);
@@ -107,12 +111,14 @@ MongoClient.connect(
     ///mongo tasks
 
     async function addnote(name, strnote,collectionName = collname) {
+
       await db.collection(collectionName).insertOne({
         name: name,
         note: strnote
       }).then(() => console.log("Add note completed"))
       .catch((err) => console.log("😅","Add note note completed " + err))
     }
+
 
     function removeNote(id,collectionName){
       db.collection(collectionName).deleteOne({_id: new mongodb.ObjectID(id) }, (err, obj)=>{
@@ -122,7 +128,7 @@ MongoClient.connect(
       })
     }
 
-    function currentlist() { return db.collection(collname).find().toArray() }
+    function currentlist(collectionName) { return db.collection(collectionName).find().toArray() }
     
    
 
@@ -135,7 +141,7 @@ MongoClient.connect(
 
     var spkey = keygenerator.session_id();
     io.on("connection", socket => {
-
+      //Security 
       var authkey = Math.round(Math.random() * 1000000);
 
     
@@ -151,64 +157,80 @@ MongoClient.connect(
       console.log(authkey);
 
       socket.on("authreq", arg => {
+        if (arg != null || arg != undefined){
 
-        if (arg.key == authkey || arg.key == 1324) { //2001 removelater
-          socket.emit("authres", {
-            wrong: false,
-            key: spkey
-          });
-          console.log(arg.key);
-          console.log("Redirect to website");
-        } else {
-          socket.emit("authres", {
-            wrong: true
-          });
-          console.log(arg.key);
-          console.log("Attempt for authkey denied");
+          if (arg.key == authkey || arg.key == 1324) { //2001 removelater
+            socket.emit("authres", {
+              wrong: false,
+              key: spkey
+            });
+            console.log(arg.key);
+            console.log("Redirect to website");
+          } else {
+            socket.emit("authres", {
+              wrong: true
+            });
+            console.log(arg.key);
+            console.log("Attempt for authkey denied");
+          }
         }
       });
+      socket.on("sessionkey", arg => {
+        if (arg != null || arg != undefined){
+          if (arg.sesskey == spkey) {
+            socket.emit("ressessionkey", {
+              wrong: false
+            });
+          } else {
+            socket.emit("ressessionkey", {
+              wrong: true
+            });
+          }
+        }
+      });
+      //MongoDb note methods
+
+
+
       socket.on("addtolist", arg => {
-        addnote(arg.name, arg.note);
-     
+        if (arg != null || arg != undefined){
+
+          addnote(arg.name, arg.note,arg.collname);
+        }
 
       });
+      socket.on('removeFromList', (arg)=>{
+        if (arg != null || arg != undefined){
+          if (arg.sessid == spkey){
+            removeNote(arg.id,arg.collname)
+          }
+      }
+
+      })
       
 
-      socket.on("sessionkey", arg => {
+      
 
-        if (arg.sesskey == spkey) {
-          socket.emit("ressessionkey", {
-            wrong: false
-          });
-        } else {
-          socket.emit("ressessionkey", {
-            wrong: true
-          });
-        }
-      });
+      socket.on('reqcolllist', async arg =>{
+        if (arg != null || arg != undefined){
+          if (arg.sessid == spkey){
+            socket.emit('collList',{
+              list: await currentlist(arg.collname),
+              collname: arg.collname
+            
 
-      socket.on('reloadnote', async arg =>{
-        if (arg.sessid == spkey){
-          socket.emit('notes',{
-            notes: await currentlist()
-        
-          })
-          
-
-        }
+          }
+      }
         
       })
+      //liveStream page
+
       socket.on('liveClientSocket1',arg=>{
       
         io.emit('liveFeed', arg)
       })
-      socket.on('removeFromList', (arg)=>{
-        if (arg.sessid == spkey){
-          removeNote(arg.id,collname)
-        }
-
-      })
-
+      
+      //Hidden page test 
       socket.on("homepagereq", arg => {
         if (arg != null || arg != undefined){
           if (arg.sesskey == spkey) {

@@ -7,7 +7,7 @@ import io from "socket.io-client";
 
 import Noteboard from "./Noteboard"
 import WordofTheDay from "./Wordoftheday";
-
+import Schedule from './Schedule'
 //  
 
 interface Props {
@@ -121,14 +121,15 @@ class Board extends React.Component<Props, State> {
               <div className="row">
                    <div className="col-sm">
                      <h2 style = {{color: "red"}} >Notes:</h2>
-                     <Noteboard></Noteboard>
+                     <Noteboard/>
                     </div>
                     <div className="col-sm">
-                       email?
+                    <h2 style = {{color: "red"}} >Schedule:</h2>
+                       <Schedule/>
                     </div>
                     <div className="col-sm">
                     <h2 style = {{color: "red"}} >WOD:</h2>
-                      <WordofTheDay></WordofTheDay>
+                      <WordofTheDay/>
                     
                 </div>
           </div>

@@ -25,6 +25,7 @@ class Login extends React.Component<Props, State> {
   baseUrl: any;
   socket: SocketIOClient.Socket;
 
+  
   constructor(props: Props, state: State) {
     super(props);
     this.baseUrl = secret.getIP();

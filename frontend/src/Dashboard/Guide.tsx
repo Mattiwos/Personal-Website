@@ -21,17 +21,22 @@ interface Props {
 }
 interface State {
   displayboard: boolean;
+  x:any;
+  y:any;
 }
 
 class Guide extends React.Component<Props, State> {
   baseUrl: string;
   socket: SocketIOClient.Socket;
+  
 
   constructor(props: Props, state: State) {
     super(props);
 
     this.state = {
-      displayboard: false
+      displayboard: false,
+      x:50,
+      y: 50
     };
 
     this.baseUrl = secret.getIP();
@@ -68,6 +73,7 @@ class Guide extends React.Component<Props, State> {
         });
       }
     });
+    setInterval(()=>this.tick(),1000)
   }
   render() {
       
@@ -92,10 +98,39 @@ class Guide extends React.Component<Props, State> {
     // {/* //   </BrowserRouter> */}
     );
   }
+  tick(){
+    this.setState(state => {
+      var n = (Math.random() > .5) ? -1 : 1
+      var ns = (Math.random() > .5) ? -1 : 1
+      return { 
+        x: state.x + 2 *Math.random() * n,
+        y: state.y + 2 *Math.random() *ns
+        };
+    });
+  }
+
   keyAuthentication() {
     if (this.state.displayboard === false) {
-      return <h1>Hm...</h1>;
+    
+
+      
+
+      return (
+        
+        <div>
+          <h1 style = {{position:"fixed",left: `${this.state.x}%`,bottom: `${this.state.y}%`  }}>❄️</h1>
+        </div>
+
+      );
     } else return <Board></Board>;
+  }
+  errorPagefun(){
+    
+      
+
+    
+    
+
   }
   sendReq() {
     console.log("Auth process started");

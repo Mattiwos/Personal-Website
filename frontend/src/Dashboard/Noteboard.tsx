@@ -51,10 +51,13 @@ class Noteboard extends React.Component<Props, State> {
         console.log("socket connected error --> " + err);
         });
         
-        this.socket.on("notes", (arg: { notes:any} ) => {
-            this.setState({notes: arg.notes});
+        this.socket.on("collList", (arg: { list:any, collname: string} ) => {
+            if (arg.collname == 'Notes'){
+                this.setState({notes: arg.list});
+            }
+           
           
-            });
+        });
 
         this.state = {
             noteinput:"",
@@ -71,8 +74,9 @@ class Noteboard extends React.Component<Props, State> {
 
     }
     reloadnotes(){
-        this.socket.emit('reloadnote',{
-            sessid:getCookie('key')
+        this.socket.emit('reqcolllist',{
+            sessid:getCookie('key'),
+            collname: 'Notes'
         })
     }
     async getIpAddress(){// I just wanna know more about you...
@@ -97,7 +101,7 @@ class Noteboard extends React.Component<Props, State> {
 
     handleCheck(event: {target: any,currentTarget: any}) {
        if (this.prevclick === event.currentTarget.dataset.id){
-            this.removeNote(event.currentTarget.dataset.id)
+            this.removeNote(event.currentTarget.dataset.id, 'Note')
 
        }
        this.prevclick = event.currentTarget.dataset.id
@@ -146,7 +150,7 @@ class Noteboard extends React.Component<Props, State> {
                 value={this.state.noteinput}
                 onChange={this.handleChange}
                 type="text" id="Noteinput"  name="Noteinput"></input>
-                <button style = {{background: "transparent",color: "red"}} type="button" onClick= {() => this.addNote()}>Add</button>
+                <button style = {{background: "transparent",color: "red"}} type="button" onClick= {() => this.addNote('Note')}>Add</button>
                 
 
             </div>
@@ -179,17 +183,14 @@ class Noteboard extends React.Component<Props, State> {
             this.setState({listNotes: this.listItems })
         
 
-            // const numbers = [1, 2, 3, 4, 5];
-            //     const listItems = numbers.map((number) =>
-            //  <li>{number}</li>
-            //     );
+          
             
        
    
         }
 
     }
-    addNote(){
+    addNote(collname: string){
 
 
         console.log(this.state.noteinput)
@@ -197,7 +198,8 @@ class Noteboard extends React.Component<Props, State> {
         this.setState({ noteinput: "" });
         this.socket.emit('addtolist', {
             name: this.tempip,
-            note: this.state.noteinput
+            note: this.state.noteinput,
+            collname:collname
 
 
         })
@@ -205,10 +207,11 @@ class Noteboard extends React.Component<Props, State> {
         
 
     }
-    removeNote(id: string){
+    removeNote(id: string, collname: string){
         this.socket.emit('removeFromList', {
             id: id,
-            sessid: getCookie('key')
+            sessid: getCookie('key'),
+            collname:collname
         })
 
     }
