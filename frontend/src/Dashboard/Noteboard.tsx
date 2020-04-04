@@ -52,7 +52,7 @@ class Noteboard extends React.Component<Props, State> {
         });
         
         this.socket.on("collList", (arg: { list:any, collname: string} ) => {
-            if (arg.collname === 'Notes'){
+            if (arg.collname === 'Note'){
                 this.setState({notes: arg.list});
             }
            
@@ -76,7 +76,7 @@ class Noteboard extends React.Component<Props, State> {
     reloadnotes(){
         this.socket.emit('reqcolllist',{
             sessid:getCookie('key'),
-            collname: 'Notes'
+            collname: 'Note'
         })
     }
     async getIpAddress(){// I just wanna know more about you...
