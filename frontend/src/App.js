@@ -18,6 +18,12 @@ function App() {
           render={() => (
             <div className="App">
               <Home />
+              <div>
+                <p style = {{
+                  position: "fixed",
+                  bottom: "1%",
+                  left: "47%"}}>@2020 Mattiwos</p>
+              </div>
             </div>
           )}
         />
@@ -30,6 +36,12 @@ function App() {
           render={() => (
             <div className="App">
               <Guide />
+              <div>
+              <p style = {{
+                  position: "fixed",
+                  bottom: "1%",
+                  left: "47%"}}>@2020 Mattiwos</p>
+              </div>
             </div>
           )}
         />
@@ -41,6 +53,13 @@ function App() {
           render={() => (
             <div className="App">
               <Display />
+              <div>
+              <p style = {{
+                  position: "fixed",
+                  bottom: "1%",
+                  left: "47%"}}>@2020 Mattiwos</p>
+              </div>
+
             </div>
           )}
         />  
