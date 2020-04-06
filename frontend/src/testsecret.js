@@ -12,7 +12,7 @@ var App;
             return "http://localhost:8080";
         };
         Secret.prototype.getIP = function () {
-            return "http://192.168.42.81:8080";
+return "http://192.168.1.7:8080/";
         };
         return Secret;
     }());

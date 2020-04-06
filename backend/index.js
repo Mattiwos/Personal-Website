@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
-
+console.log(port)
+var ip = require("ip");
+console.dir ( ip.address() );
 var server = app.listen(port);
 
 var io = require("socket.io").listen(server);
@@ -148,7 +150,7 @@ MongoClient.connect(
       var clientIp = socket.request.connection.remoteAddress;
 
       console.log(clientIp);
-      
+	console.log(JSON.stringify(socket.request.connection._peername))      
       socket.on('LoginAttempt',arg=>{
         
         sendAthEmail(secret.emailreceiver,`Hello Matttiwos we got a new request for login. More Info: ${JSON.stringify(socket.request.connection._peername)}`,authkey)
