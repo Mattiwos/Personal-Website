@@ -6,7 +6,7 @@ export module App {
       return "http://localhost:8080";
     }
     getIP(): string {
-      return "http://192.168.42.81:8080";
+      return `http://${location.hostname}:8080`;
     }
   }
 }
