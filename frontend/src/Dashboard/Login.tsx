@@ -1,7 +1,7 @@
 import React from "react";
 //import ReactDOM from 'react-dom'
 
-import { App } from "../testsecret";
+import { App } from "../secret";
 var secret = new App.Secret();
 
 // eslint-disable-next-line

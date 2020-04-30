@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import * as React from "react";
 import io from "socket.io-client";
-import { App } from "../testsecret";
+import { App } from "../secret";
 import Request from 'request'
 var secret = new App.Secret();
 

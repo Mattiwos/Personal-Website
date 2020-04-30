@@ -1,4 +1,4 @@
-import { App } from "../testsecret";
+import { App } from "../secret";
 var secret = new App.Secret();
 
 /* eslint-disable import/first */
