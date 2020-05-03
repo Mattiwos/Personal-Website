@@ -1,3 +1,4 @@
+ - [ ] Make a wrapper for all widgets !!!!
  - [ ] Make it so user can change note collection 
  - [ ] Count down timer
  - [X] email for code
