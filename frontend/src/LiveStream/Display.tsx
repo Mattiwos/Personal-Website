@@ -1,5 +1,5 @@
-import { App } from "../secret";
-var secret = new App.Secret();
+import { Secret } from "../secret";
+var secret = new Secret();
 // eslint-disable-next-line
 import React, { Component } from "react";
 /* eslint-disable import/first */
@@ -105,20 +105,20 @@ class Display extends React.Component<Props,States> {
        
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"></link>
 
-        <h1 style={{color: "red"}} >Live</h1>
+        
 
         {this.imgrender()}
        
        
       
-        <video 
+        {/* <video 
         ref={this.videoTag}
         autoPlay
 
       />  
         
 
-      {this.videoStream()}
+      {this.videoStream()} */}
 
         
 

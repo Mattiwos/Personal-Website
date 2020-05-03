@@ -1,5 +1,5 @@
-import { App } from "../secret";
-var secret = new App.Secret();
+import { Secret } from "../secret";
+var secret = new Secret();
 
 /* eslint-disable import/first */
 import Request from "request";
@@ -179,7 +179,7 @@ class Noteboard extends React.Component<Props, State> {
              
 
             );
-            console.log(this.listItems)
+        
             this.setState({listNotes: this.listItems })
         
 

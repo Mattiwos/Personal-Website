@@ -1,9 +1,10 @@
 /* eslint-disable import/first */
 import * as React from "react";
 import io from "socket.io-client";
-import { App } from "../secret";
+
 import Request from 'request'
-var secret = new App.Secret();
+import { Secret } from "../secret";
+var secret = new Secret();
 
 interface Props{
     products?: String[]

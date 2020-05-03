@@ -1,5 +1,5 @@
-import { App } from "../secret";
-var secret = new App.Secret();
+import { Secret } from "../secret";
+var secret = new Secret();
 /* eslint-disable import/first */
 import * as React from "react";
 
@@ -8,7 +8,9 @@ import io from "socket.io-client";
 import Noteboard from "./Noteboard"
 import WordofTheDay from "./Wordoftheday";
 import Schedule from './Schedule'
+import Display from "../LiveStream/Display"
 //  
+
 
 interface Props {
   //interface is used to make entities such as Property conform with
@@ -29,6 +31,7 @@ class Board extends React.Component<Props, State> {
   dom: HTMLDivElement | undefined;
   socket: SocketIOClient.Socket;
   getPageContainer: HTMLDivElement | null | undefined;
+ 
 
   constructor(props: Props, state: State) {
     super(props);
@@ -62,7 +65,7 @@ class Board extends React.Component<Props, State> {
    
 
     this.socket.on("htmlpageres", (arg: { pagetxt: string }) => {
-      console.log(arg.pagetxt);
+     
       this.setState(state => {
         this.componentDidMount();
         return { htmltxt: arg.pagetxt };
@@ -89,6 +92,8 @@ class Board extends React.Component<Props, State> {
   componentDidMount() {
     if (this.getPageContainer != null)
       this.getPageContainer.appendChild(this.getPage());
+     
+     
   }
   tick(){
     this.changeTcolor()
@@ -109,7 +114,8 @@ class Board extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"></link>
+        
+        
 
         <div ref={node => (this.getPageContainer = node)}>
           <div id="hiddenpage"></div>
@@ -117,24 +123,46 @@ class Board extends React.Component<Props, State> {
         <div><h1 style = {{color: this.state.randomColor}} >Dashboard</h1>
         <p style = {{color: this.state.random2Color}} >By Mattiwos B.</p>
         </div>
-        <div className="container">
-              <div className="row">
-                   <div className="col-sm">
-                     <h2 style = {{color: "red"}} >Notes:</h2>
-                     <Noteboard/>
-                    </div>
-                    <div className="col-sm">
-                    <h2 style = {{color: "red"}} >Schedule:</h2>
-                       <Schedule/>
-                    </div>
-                    <div className="col-sm">
-                    <h2 style = {{color: "red"}} >WOD:</h2>
-                      <WordofTheDay/>
-                    
-                </div>
-          </div>
-         </div>
 
+
+    <div className="grid-stack">
+      <div className="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="4" data-gs-height="2">
+        <div className="grid-stack-item-content">
+        <h2 style = {{color: "red"}} >Notes:</h2>
+        <Noteboard/>
+          </div>
+      </div>
+      <div className="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4">
+        <div className="grid-stack-item-content">
+        <h2 style = {{color: "red"}} >Schedule:</h2>
+          <Schedule/>
+        
+        </div>
+      </div>
+      <div className="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4">
+        <div className="grid-stack-item-content">
+        <h2 style = {{color: "red"}} >WOD:</h2>
+          <WordofTheDay/>
+        
+        </div>
+      </div>
+
+      <div className="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4">
+        <div className="grid-stack-item-content">
+        <h2 style = {{color: "red"}} >Live Feed:</h2>
+          <Display/>
+        
+        </div>
+      </div>
+
+    </div>
+
+    <script type="text/javascript">
+    GridStack.init();
+    console.log("Ree")
+    </script>
+    
+   
         
         
 

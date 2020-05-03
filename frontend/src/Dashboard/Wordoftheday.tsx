@@ -1,5 +1,5 @@
-import { App } from "../secret";
-var secret = new App.Secret();
+import { Secret } from "../secret";
+var secret = new Secret();
 /* eslint-disable import/first */
 import * as React from "react";
 // import Request from "request";
