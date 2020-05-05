@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import io from "socket.io-client";
 import Webcam from "react-webcam";
  
-// const WebcamComponent: any = () => <Webcam />;
+
 
 interface Props{
     product?: String[];

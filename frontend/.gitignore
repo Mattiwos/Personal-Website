@@ -6,7 +6,7 @@
 .pnp.js
 
 #senstive info
-secret.js
+/backend/secret.js
 
 # testing
 /coverage

@@ -11,7 +11,7 @@ import Schedule from './Schedule'
 import Display from "../LiveStream/Display"
 //  
 
-
+declare const GridStack: any;
 interface Props {
   //interface is used to make entities such as Property conform with
   products?: string[]; //contains all the properies such as html tag
@@ -31,6 +31,7 @@ class Board extends React.Component<Props, State> {
   dom: HTMLDivElement | undefined;
   socket: SocketIOClient.Socket;
   getPageContainer: HTMLDivElement | null | undefined;
+  grid: any;
  
 
   constructor(props: Props, state: State) {
@@ -93,7 +94,23 @@ class Board extends React.Component<Props, State> {
     if (this.getPageContainer != null)
       this.getPageContainer.appendChild(this.getPage());
      
-     
+     this.init();
+  }
+  init(){
+    try{
+      
+
+      this.grid = GridStack.init();
+      console.log("Ree")
+      // this.grid.addWidget('<div class="grid-stack-item"><div class="grid-stack-item-content"></div>re</div>',
+      // 0, 0, 3, 2, false)
+
+    }
+    catch(e){
+      console.log(e)
+    }
+
+    
   }
   tick(){
     this.changeTcolor()
@@ -157,10 +174,7 @@ class Board extends React.Component<Props, State> {
 
     </div>
 
-    <script type="text/javascript">
-    GridStack.init();
-    console.log("Ree")
-    </script>
+
     
    
         

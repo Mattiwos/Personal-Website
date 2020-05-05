@@ -8,6 +8,7 @@ import * as React from "react";
 
 import io from "socket.io-client";
 
+
 interface Props {
     products?: string[]; //contains all the properies such as html tag
 }
@@ -89,9 +90,7 @@ class Noteboard extends React.Component<Props, State> {
             console.log("IP: " + this.tempip);
             
         })
-       
-        
-        // return this.tempid;
+
         this.handleChange = this.handleChange.bind(this);
         this.handleCheck = this.handleCheck.bind(this)
     }

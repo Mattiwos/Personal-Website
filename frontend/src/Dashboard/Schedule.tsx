@@ -105,12 +105,9 @@ export default class Schedule extends React.Component<Props,States>{
         })
 
     }
-    
-
-
-
 
 }
+
 function getCookie(cname: string) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -125,4 +122,20 @@ function getCookie(cname: string) {
       }
     }
     return "";
-  }
+}
+
+class ScheduleWidget{
+    schedulelist: any;
+
+    constructor(currArr: any){
+        this.schedulelist = currArr;
+    }
+    add(title: string, note: string,day: string, time: string){
+
+
+    }
+    load(){
+        
+    }
+
+}

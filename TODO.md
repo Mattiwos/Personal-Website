@@ -6,3 +6,4 @@
  - [ ] WOD
  - [ ] calander
  - [ ] top news
+ - [ ] https://github.com/the-raspberry-pi-guy/lcd.git

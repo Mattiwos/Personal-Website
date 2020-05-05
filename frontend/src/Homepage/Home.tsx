@@ -62,10 +62,8 @@ class Home extends React.Component<Props,States> {
     return (
       <div>
        
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"></link>
-        
-        {/* <canvas id="myCanvas" width="100" height="100"></canvas>
-        <Snow id = {'myCanvas'}/> */}
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" />
+
 
         <h1 style={mystyle} >Mattiwos Belachew</h1>
         <a href = "/dashboard" target="_top" >Dashboard</a>

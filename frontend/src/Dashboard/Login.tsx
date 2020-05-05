@@ -94,7 +94,7 @@ class Login extends React.Component<Props, State> {
             name="key"
           ></input><br></br>
           <button style = {{background: "transparent",color: "red"}} id="submit" type="button" onClick={() => this.buttonclick()}>
-            Submit
+            Submit!
           </button>
         </div>
       </div>
