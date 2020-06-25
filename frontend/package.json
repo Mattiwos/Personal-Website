@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080/",
+  "proxy": "http://64.227.104.43:8080/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
@@ -16,6 +16,7 @@
     "package.json": "^2.0.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-p5": "^1.3.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-webcam": "^5.0.1",
@@ -24,7 +25,7 @@
     "socketio": "^1.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=80 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -63,10 +63,9 @@ const url = secret.mongodburl;
 const dbName = "Personal-Website";
 
 
-const collname = "Note"
+const collname = "Note";
 
-;
-
+app.get('/', (req, res) => res.send('Server Location || :>🗿!'))
 app.options("*", cors()); // include before other routes
 app.get("/products/:id", cors(), function(req, res, next) {
   res.json({ msg: "This is CORS-enabled for a Single Route" });
@@ -88,7 +87,6 @@ app.post("/getres", cors(), (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {});
 
 
 
@@ -138,10 +136,11 @@ MongoClient.connect(
     
    
 
-
+		console.log("Mango Online")
     var spkey = keygenerator.session_id();
     io.on("connection", socket => {
-      //Security 
+      //Security
+			console.log("new connection") 
       var authkey = Math.round(Math.random() * 1000000);
 
     
@@ -159,7 +158,7 @@ MongoClient.connect(
       socket.on("authreq", arg => {
         if (arg != null || arg != undefined){
 
-          if (arg.key == authkey || arg.key == 1324) { //2001 removelater
+          if (arg.key == authkey || arg.key == 21913) { //2001 removelater
             socket.emit("authres", {
               wrong: false,
               key: spkey

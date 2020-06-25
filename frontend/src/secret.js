@@ -4,6 +4,6 @@ export class Secret {
       return "http://localhost:8080";
    }
    getIP() { //server IP
-     return `http://192.168.1.6:8080`;
+     return `http://64.227.104.43:8080`;
       }
 }

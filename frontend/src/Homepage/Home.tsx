@@ -2,9 +2,9 @@
 import React, { Component } from "react";
 import githubLogo from "../assets/github.png"
 import linkedinLogo from "../assets/linkedin.png"
+import Bshow from "./Background/bshow.jsx"
 
-
-// import Snow from './Background/Snow'
+//import Snow from './Background/Snow'
 
 interface Props{
     product?: String[];
@@ -63,11 +63,19 @@ class Home extends React.Component<Props,States> {
       <div>
        
        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" />
+				
 
 
-        <h1 style={mystyle} >Mattiwos Belachew</h1>
+
+        <h1 style={mystyle} >Mattiwos Belachew</h1>	
+				<h4 style={{
+      		fontFamily: "Arial",
+      		color: "red" 
+					}}> Berkeley,CA</h4>
         <a href = "/dashboard" target="_top" >Dashboard</a>
-
+				
+				<Bshow/>
+    
         <div className="container-fluid">
           <div className="row">
                    <div className="col-sm">
@@ -82,6 +90,7 @@ class Home extends React.Component<Props,States> {
                     </div>
           </div>
         </div>
+			
 
       </div>
     );
