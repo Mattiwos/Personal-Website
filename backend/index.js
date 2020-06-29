@@ -158,7 +158,7 @@ MongoClient.connect(
       socket.on("authreq", arg => {
         if (arg != null || arg != undefined){
 
-          if (arg.key == authkey || arg.key == 21913) { //2001 removelater
+          if (arg.key == authkey || arg.key == secret.secretpass) { //2001 removelater
             socket.emit("authres", {
               wrong: false,
               key: spkey
